@@ -4,8 +4,8 @@ import 'package:clean_architecture_with_mvvm/data/network/error_handler.dart';
 import 'package:clean_architecture_with_mvvm/data/network/failure.dart';
 import 'package:clean_architecture_with_mvvm/data/network/network_info.dart';
 import 'package:clean_architecture_with_mvvm/data/request/request.dart';
-import 'package:clean_architecture_with_mvvm/domain/model.dart';
-import 'package:clean_architecture_with_mvvm/domain/repository.dart';
+import 'package:clean_architecture_with_mvvm/domain/model/model.dart';
+import 'package:clean_architecture_with_mvvm/domain/repository/repository.dart';
 import 'package:dartz/dartz.dart';
 
 class RepositoryImpl extends Repository {

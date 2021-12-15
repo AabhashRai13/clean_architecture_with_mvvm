@@ -1,6 +1,6 @@
 import 'package:clean_architecture_with_mvvm/app/extensions.dart';
 import 'package:clean_architecture_with_mvvm/data/responses/responses.dart';
-import 'package:clean_architecture_with_mvvm/domain/model.dart';
+import 'package:clean_architecture_with_mvvm/domain/model/model.dart';
 
 // to convert the response into a non nullable object (model)
 

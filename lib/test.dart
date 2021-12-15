@@ -1,5 +1,6 @@
 import 'package:clean_architecture_with_mvvm/app/app.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer' as logger;
  class Test extends StatelessWidget {
   const Test({Key? key}) : super(key: key);
 
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
   }
 
   void getAppState() {
-    print(MyApp.instance.appState); //10s
+    logger.log("${MyApp.instance.appState}"); //10s
   }
 
   @override
