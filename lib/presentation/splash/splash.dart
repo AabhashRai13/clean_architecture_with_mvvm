@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:clean_architecture_with_mvvm/presentation/resources/assets_manager.dart';
 import 'package:clean_architecture_with_mvvm/presentation/resources/color_manager.dart';
 import 'package:clean_architecture_with_mvvm/presentation/resources/routes_manager.dart';

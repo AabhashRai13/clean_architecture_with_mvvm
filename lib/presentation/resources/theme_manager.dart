@@ -1,4 +1,3 @@
-
 import 'package:clean_architecture_with_mvvm/presentation/resources/styles_manager.dart';
 import 'package:clean_architecture_with_mvvm/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +49,8 @@ ThemeData getApplicationTheme() {
               color: ColorManager.darkGrey, fontSize: FontSize.s16),
           subtitle1: getMediumStyle(
               color: ColorManager.lightGrey, fontSize: FontSize.s14),
+          subtitle2: getMediumStyle(
+              color: ColorManager.primary, fontSize: FontSize.s14),
           caption: getRegularStyle(color: ColorManager.grey1),
           bodyText1: getRegularStyle(color: ColorManager.grey)),
 
