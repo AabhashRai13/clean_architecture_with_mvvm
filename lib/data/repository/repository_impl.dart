@@ -1,5 +1,6 @@
 import 'package:clean_architecture_with_mvvm/data/data_source/remote_data_source.dart';
 import 'package:clean_architecture_with_mvvm/data/mapper/mapper.dart';
+import 'package:clean_architecture_with_mvvm/data/network/error_handler.dart';
 import 'package:clean_architecture_with_mvvm/data/network/failure.dart';
 import 'package:clean_architecture_with_mvvm/data/network/network_info.dart';
 import 'package:clean_architecture_with_mvvm/data/request/request.dart';
@@ -20,20 +21,24 @@ class RepositoryImpl extends Repository {
       // its safe to call the API
       final response = await _remoteDataSource.login(loginRequest);
 
-      if (response.status == 0) // success
-      {
-        // return data (success)
-        // return right
-        return Right(response.toDomain());
-      } else {
-        // return biz logic error
-        // return left
-        return Left(Failure(
-            409, response.message ?? "we have biz error logic from API side"));
+      try {
+        if (response.status == 0) // success
+        {
+          // return data (success)
+          // return right
+          return Right(response.toDomain());
+        } else {
+          // return biz logic error
+          // return left
+          return Left(Failure(response.status ?? ApiInternalStatus.failure,
+              response.message ?? ResponseMessage.unknown));
+        }
+      } catch (error) {
+        return (Left(ErrorHandler.handle(error).failure));
       }
     } else {
       // return connection error
-      return Left(Failure(501, "please check your internet connection"));
+      return Left(DataSource.noInternetConnection.getFailure());
     }
   }
 }
