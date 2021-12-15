@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import 'failure.dart';
 
 enum DataSource {
@@ -13,7 +15,8 @@ enum DataSource {
   receiveTimeout,
   sendTimeout,
   cacheError,
-  noInternetConnection
+  noInternetConnection,
+  unknown
 }
 
 class ResponseCode {
@@ -63,6 +66,50 @@ class ResponseMessage {
   static const String cacheError = "Cache error, try again later";
   static const String noInternetConnection =
       "Please check your internet connection";
+}
+
+class ErrorHandler implements Exception {
+  late Failure failure;
+
+  ErrorHandler.handle(dynamic error) {
+    if (error is DioError) {
+      // dio error so its error from response of the API
+      failure = _handleError(error);
+    } else {
+      // default error
+      failure = DataSource.unknown.getFailure();
+    }
+  }
+
+  Failure _handleError(DioError error) {
+    switch (error.type) {
+      case DioErrorType.connectTimeout:
+        return DataSource.connectTimeout.getFailure();
+      case DioErrorType.sendTimeout:
+        return DataSource.sendTimeout.getFailure();
+      case DioErrorType.receiveTimeout:
+        return DataSource.receiveTimeout.getFailure();
+      case DioErrorType.response:
+        switch (error.response?.statusCode) {
+          case ResponseCode.badRequest:
+            return DataSource.badRequest.getFailure();
+          case ResponseCode.forbidden:
+            return DataSource.forbidden.getFailure();
+          case ResponseCode.unauthorised:
+            return DataSource.unauthorised.getFailure();
+          case ResponseCode.notFound:
+            return DataSource.notFound.getFailure();
+          case ResponseCode.internalServerError:
+            return DataSource.internalServerError.getFailure();
+          default:
+            return DataSource.unknown.getFailure();
+        }
+      case DioErrorType.cancel:
+        return DataSource.cancel.getFailure();
+      case DioErrorType.other:
+        return DataSource.unknown.getFailure();
+    }
+  }
 }
 
 extension DataSourceExtension on DataSource {
