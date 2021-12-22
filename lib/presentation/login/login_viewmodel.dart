@@ -13,7 +13,7 @@ class LoginViewModel extends BaseViewModel
   final StreamController _isAllInputsValidStreamController =
       StreamController<void>.broadcast();
   var loginObject = LoginObject("", "");
-  final LoginUseCase? _loginUseCase; // todo remove ?
+  final LoginUseCase _loginUseCase; // todo remove ?
 
   LoginViewModel(this._loginUseCase);
 
@@ -40,17 +40,17 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
-    // (await _loginUseCase.execute(
-    //         LoginUseCaseInput(loginObject.userName, loginObject.password)))
-    //     .fold(
-    //         (failure) => {
-    //               // left -> failure
-    //               logger.log(failure.message)
-    //             },
-    //         (data) => {
-    //               // right -> success (data)
-    //               logger.log("${data.customer?.name}")
-    //             });
+    (await _loginUseCase.execute(
+            LoginUseCaseInput(loginObject.userName, loginObject.password)))
+        .fold(
+            (failure) => {
+                  // left -> failure
+                  logger.log(failure.message)
+                },
+            (data) => {
+                  // right -> success (data)
+                  logger.log("${data.customer?.name}")
+                });
   }
 
   @override
